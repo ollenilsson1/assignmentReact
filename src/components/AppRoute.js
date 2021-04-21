@@ -1,32 +1,16 @@
 import React from 'react';
 import Header from './Header/Header';
-import Card from './Card';
+import CardList from './Card/CardList';
 import "./Body.css";
-import {BrowserRouter as Router} from "react-router-dom";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 
 export default function AppRoute() {
     return (
-        <>
+        <body>
             <Router>
-                <body>
                 <Header />
-                <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                </div>
-                </body>
+                <Route path="/barber" exact component={CardList} />
             </Router>
-        </>
+        </body>
     )
 }
