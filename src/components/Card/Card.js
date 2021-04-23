@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import barberimage from "../Images/barber.jpeg";
 
-function Card({ img, title, desc, price }) {
+/* hårdkodade bilder, ska komma från loopen/backend i framtiden */
+
+function Card({title, desc, price }) {
   return (
     <div className="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-8">
 
-      <img src={img} alt="" className="overflow-hidden"></img>
+      <img src={barberimage} alt="" className="overflow-hidden"></img>
 
       <div className="p-4">
         <h3 className="font-medium text-gray-600 text-lg my-2 uppercase text-center">{title}</h3>

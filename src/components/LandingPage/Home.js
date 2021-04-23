@@ -6,8 +6,8 @@ function Home (){
     return(
         
         <div className="">
-            <img className="hidden lg:block" src={backgroundImage} />
-            <img className="lg:hidden" src={backgroundImageSmall} />
+            <img className="hidden lg:block" src={backgroundImage} alt="big background"/>
+            <img className="lg:hidden" src={backgroundImageSmall} alt="small background"/>
         </div>
     )
 }
