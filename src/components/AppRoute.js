@@ -1,32 +1,26 @@
 import React from 'react';
 import Header from './Header/Header';
-import Card from './Card';
-import "./Body.css";
-import {BrowserRouter as Router} from "react-router-dom";
+import Home from './LandingPage/Home';
+import CardList from './Card/CardList';
+import Login from './Login/Login';
+import Register from './Register/Register';
+import ForgotPassword from './ForgotPassword/ForgotPassword';
+import BookingForm from './Booking/BookingForm';
+import Mybookings from './Booking/Mybookings';
+import { Route, BrowserRouter as Router } from "react-router-dom";
 
 export default function AppRoute() {
     return (
-        <>
             <Router>
-                <body>
                 <Header />
-                <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                </div>
-                </body>
+                <Route path="/" exact component={Home} />
+                <Route path="/barber" exact component={CardList} />
+                <Route path="/login" exact component={Login} />
+                <Route path="/register" exact component={Register} />
+                <Route path="/forgotpassword" exact component={ForgotPassword} />
+                <Route path="/booking" component={BookingForm} />
+                <Route path="/mybookings" exact component={Mybookings} />
             </Router>
-        </>
+        
     )
 }
