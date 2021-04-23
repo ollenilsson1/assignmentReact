@@ -7,6 +7,7 @@ import Register from './Register/Register';
 import ForgotPassword from './ForgotPassword/ForgotPassword';
 import BookingForm from './Booking/BookingForm';
 import Mybookings from './Booking/Mybookings';
+import Footer from './Footer/Footer';
 import { Route, BrowserRouter as Router } from "react-router-dom";
 
 export default function AppRoute() {
@@ -20,6 +21,7 @@ export default function AppRoute() {
                 <Route path="/forgotpassword" exact component={ForgotPassword} />
                 <Route path="/booking" component={BookingForm} />
                 <Route path="/mybookings" exact component={Mybookings} />
+                <Footer/>
             </Router>
         
     )
