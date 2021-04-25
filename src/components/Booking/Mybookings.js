@@ -12,7 +12,7 @@ function Mybookings() {
       <div className="p-4">
         <h3 className="font-medium text-gray-600 text-lg my-2 uppercase text-center">Hårklippning 30min</h3>
         <p className="text-center">Med sax och maskin + Tvätt</p>
-        <p className="text-center">350</p>
+        <p className="text-center">350kr</p>
         <div className="mt-5 text-center">
           <Link className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" to="/newbooking">Boka om</Link>
           <Link className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" to="/deletebooking">Avboka</Link>

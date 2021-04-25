@@ -3,27 +3,27 @@ import { Link } from "react-router-dom";
 
 function Footer() {
     return (
-        <div class="w-full min-h-full flex items-center justify-center pt-10 bg-gray-700">
-        <div class="md:w-2/3 w-full px-4 text-white flex flex-col">
-            <div class="w-full text-7xl font-bold">
-                <h1 class="w-full md:w-2/3">Kontakta oss på stockholms bästa barber?</h1>
+        <div className="w-full min-h-full flex items-center justify-center pt-10 bg-gray-700">
+        <div className="md:w-2/3 w-full px-4 text-white flex flex-col">
+            <div className="w-full text-7xl font-bold">
+                <h1 className="w-full md:w-2/3">Kontakta oss på stockholms bästa barber?</h1>
             </div>
-            <div class="flex mt-8 flex-col md:flex-row md:justify-between">
-                <p class="w-full md:w-2/3 text-gray-400">Vi svarar så fort vi kan, skicka ett mail eller ring oss på 0793314962</p>
-                <div class="w-44 pt-6 md:pt-0">
-                    <Link className="bg-red-500 justify-center text-center rounded-lg shadow px-10 py-3 flex items-center" to="/">Kontakta oss</Link>
+            <div className="flex mt-8 flex-col md:flex-row md:justify-between">
+                <p className="w-full md:w-2/3 text-gray-400">Vi svarar så fort vi kan, skicka ett mail eller ring oss på 0793314962</p>
+                <div className="w-44 pt-6 md:pt-0">
+                    <Link className="bg-red-500 justify-center text-center rounded-lg shadow px-10 py-3 flex items-center" to="/contact">Kontakta oss</Link>
                 </div>
             </div>
-            <div class="flex flex-col">
-                <div class="flex mt-24 mb-12 flex-row justify-between">
-                    <div class="">
+            <div className="flex flex-col">
+                <div className="flex mt-24 mb-12 flex-row justify-between">
+                    <div>
                          <svg id="Capa_1" enableBackground="new 0 0 512 512" height="36" viewBox="0 0 512 512" width="32" xmlns="http://www.w3.org/2000/svg"><g><path d="m237.287 125.29-74.644 74.645v74.701l149.346-149.346z" fill="#eaeaea" /><path d="m293.408 143.871 18.581-18.581h-74.702l-18.58 18.581z" fill="#cbcbcb" /><path d="m349.357 162.623-186.714 186.714v37.373h37.329l149.385-149.386z" fill="#eaeaea" /><path d="m349.357 386.71v-74.684l-74.684 74.684z" fill="#eaeaea" /><path d="m162.643 368.129v18.581h37.329l18.581-18.581z" fill="#cbcbcb" /><path d="m293.254 368.129-18.581 18.581h74.684v-18.581z" fill="#cbcbcb" /><path d="m162.643 125.29v74.645l74.644-74.645z" fill="#dd636e" /><path d="m349.357 125.29h-37.368l-149.346 149.346v74.701l186.714-186.714z" fill="#dd636e" /><path d="m218.707 143.871 18.58-18.581h-74.644v18.581z" fill="#da4a54" /><path d="m349.357 143.871v-18.581h-37.368l-18.581 18.581z" fill="#da4a54" /><path d="m349.357 312.026v-74.702l-149.385 149.386h74.701z" fill="#dd636e" /><path d="m218.553 368.129-18.581 18.581h74.701l18.581-18.581z" fill="#da4a54" /><g><path d="m352.838 90.875c-3.18-50.72-45.316-90.875-96.838-90.875s-93.658 40.155-96.838 90.875z" fill="#80b4fb" /></g><path d="m162.154 72.294c-1.574 5.987-2.592 12.2-2.992 18.581h193.676c-.4-6.381-1.418-12.593-2.992-18.581z" fill="#61a2f9" /><g><path d="m352.838 421.125c-3.18 50.72-45.316 90.875-96.838 90.875s-93.658-40.155-96.838-90.875z" fill="#80b4fb" /></g><path d="m349.846 439.706c1.574-5.987 2.592-12.2 2.992-18.581h-193.676c.4 6.38 1.418 12.593 2.992 18.581z" fill="#61a2f9" /><path d="m356.33 90.875h-200.66c-9.504 0-17.208 7.704-17.208 17.208 0 9.504 7.704 17.208 17.208 17.208h200.66c9.504 0 17.208-7.704 17.208-17.208 0-9.504-7.704-17.208-17.208-17.208z" fill="#8c808a" /><path d="m356.33 108.083h-200.66c-6.366 0-11.91-3.466-14.887-8.604-1.467 2.533-2.321 5.466-2.321 8.604 0 9.504 7.704 17.208 17.208 17.208h200.66c9.504 0 17.208-7.704 17.208-17.208 0-3.138-.854-6.071-2.321-8.604-2.976 5.138-8.521 8.604-14.887 8.604z" fill="#7b7179" /><path d="m356.33 421.125h-200.66c-9.504 0-17.208-7.704-17.208-17.208 0-9.504 7.704-17.208 17.208-17.208h200.66c9.504 0 17.208 7.704 17.208 17.208 0 9.504-7.704 17.208-17.208 17.208z" fill="#8c808a" /><path d="m356.33 403.918h-200.66c-6.366 0-11.91-3.465-14.887-8.604-1.467 2.533-2.321 5.466-2.321 8.604 0 9.504 7.704 17.208 17.208 17.208h200.66c9.504 0 17.208-7.704 17.208-17.208 0-3.138-.854-6.071-2.321-8.604-2.976 5.138-8.521 8.604-14.887 8.604z" fill="#7b7179" /></g></svg>
                     </div>
                     <Link className="hidden md:block border-b-2 border-transparent hover:border-blue-300" to="/">Startsida</Link>
                     <Link className="hidden md:block border-b-2 border-transparent hover:border-blue-300" to="/barber">Frisör</Link>
                     <Link className="hidden md:block border-b-2 border-transparent hover:border-blue-300" to="/mybookings">Mina bokningar</Link>
                     <Link className="hidden md:block border-b-2 border-transparent hover:border-blue-300" to="/login">Logga in</Link>
-                    <div class="flex flex-row space-x-8 items-center justify-between">
+                    <div className="flex flex-row space-x-8 items-center justify-between">
                         <a>
                             <svg width="6" height="12" viewBox="0 0 6 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3.89782 12V6.53514H5.67481L5.93895 4.39547H3.89782V3.03259C3.89782 2.41516 4.06363 1.99243 4.91774 1.99243H6V0.0847928C5.47342 0.0262443 4.94412 -0.00202566 4.41453 0.000112795C2.84383 0.000112795 1.76542 0.994936 1.76542 2.82122V4.39147H0V6.53114H1.76928V12H3.89782Z" fill="white"/>
@@ -43,8 +43,8 @@ function Footer() {
                         </a>
                     </div>
                 </div>
-                <hr class="border-gray-600"/>
-                <p class="w-full text-center my-12 text-gray-600">Copyright © 2021 Olle Nilsson</p>
+                <hr className="border-gray-600"/>
+                <p className="w-full text-center my-12 text-gray-600">Copyright © 2021 Olle Nilsson</p>
             </div>
         </div>
     </div>
