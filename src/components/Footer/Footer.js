@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
     return (
-        <div class="w-full min-h-full flex items-center justify-center pt-4 bg-gray-700">
+        <div class="w-full min-h-full flex items-center justify-center pt-10 bg-gray-700">
         <div class="md:w-2/3 w-full px-4 text-white flex flex-col">
             <div class="w-full text-7xl font-bold">
                 <h1 class="w-full md:w-2/3">Kontakta oss på stockholms bästa barber?</h1>
@@ -11,7 +11,7 @@ function Footer() {
             <div class="flex mt-8 flex-col md:flex-row md:justify-between">
                 <p class="w-full md:w-2/3 text-gray-400">Vi svarar så fort vi kan, skicka ett mail eller ring oss på 0793314962</p>
                 <div class="w-44 pt-6 md:pt-0">
-                    <a class="bg-red-500 justify-center text-center rounded-lg shadow px-10 py-3 flex items-center">Kontakta oss</a>
+                    <Link className="bg-red-500 justify-center text-center rounded-lg shadow px-10 py-3 flex items-center" to="/">Kontakta oss</Link>
                 </div>
             </div>
             <div class="flex flex-col">
