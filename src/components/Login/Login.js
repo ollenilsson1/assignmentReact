@@ -18,20 +18,20 @@ function Login() {
     };
 
     /* Måste man ha async när det är i ett event submit? */
-    async function submitHandler(event){
+    async function submitHandler(event) {
         event.preventDefault();
 
         await axios.post('http://localhost:1337/auth/local', {
             identifier: EnteredEmail,
             password: EnteredPassword,
-          })
-          .then((res) => {
-          localStorage.setItem('token', res.data.jwt);
-          history.push("/barber");
-          })
-          .catch(error => {
-              console.log('Error Message: ', error);
-          })
+        })
+            .then((res) => {
+                localStorage.setItem('token', res.data.jwt); 
+                history.push("/barber");
+            })
+            .catch(error => {
+                console.log('Error Message: ', error);
+            })
     }
 
 

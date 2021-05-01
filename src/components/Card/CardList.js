@@ -23,8 +23,7 @@ function CardList() {
     useEffect(()=>{
         
         const fetchProducts = async()=>{
-            const response = await axios.get("http://localhost:1337/products")
-            console.log(response);
+            const response = await axios.get("http://localhost:1337/products");
 
             setProducts(response.data)
         }
@@ -38,7 +37,7 @@ function CardList() {
             {products.map((product) => {
                 return (
                     
-                   <Card img={product.img} title={product.name} desc={product.description} price={product.price} />
+                   <Card key={product.id} img={product.img} title={product.name} desc={product.description} price={product.price} />
                    
                 )
                
