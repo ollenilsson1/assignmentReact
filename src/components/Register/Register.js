@@ -1,10 +1,14 @@
-import axios from 'axios';
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router';
+
 
 
 
 function Register() {
 
+    const history = useHistory();
+    
     const [EnteredName, setName] = useState('');
     const [EnteredEmail, setEmail] = useState('');
     const [EnteredPassword, setPassword] = useState('');
@@ -23,18 +27,22 @@ function Register() {
 
     function submitHandler(event) {
         event.preventDefault();
-        console.log(EnteredName, EnteredEmail, EnteredPassword);
-
+        /* fungerar bara när jag har username inte name */
         axios.post('http://localhost:1337/auth/local/register', {
-            name : EnteredName,
-            email : EnteredEmail,
-            password : EnteredPassword,
+            username: EnteredName,
+            email: EnteredEmail,
+            password: EnteredPassword,
         })
-        .then(response => {console.log(response.data)})
+        .then((res) => {
+            
+            if(res.status === 200){
+                history.push("/login");
+            }
+           
+        })
         .catch(error => {
-            console.log('Error message: ', error.response);
+            console.log('Error message: ', error);
         })
-
     }
    
 
@@ -56,8 +64,9 @@ function Register() {
 
                         <label htmlFor="password" className="block mt-2 text-xs font-semibold text-gray-600 uppercase">Lösenord</label>
                         <input id="password" type="password" name="password" value={EnteredPassword} onChange={passwordChangeHandler} placeholder="Lösenord.." autoComplete="current-password" className="block w-full py-3 px-1 mt-2 mb-4 text-gray-800 appearance-none border-b-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200" required />
-
+                
                         <button type="submit" className="w-full py-3 mt-10 bg-gray-800 rounded-sm font-medium text-white uppercase focus:outline-none hover:bg-gray-700 hover:shadow-none">Skapa konto</button>
+
                     </form>
                 </div>
             </div>
