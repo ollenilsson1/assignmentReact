@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+/* importerar axios för att sätta info för alla sidor
+import axios from 'axios';
+
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token'); */
 
 ReactDOM.render(
   <React.StrictMode>
