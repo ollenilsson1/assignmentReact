@@ -2,6 +2,13 @@ import React from 'react';
 import './Header.css';
 import { Link } from "react-router-dom";
 
+const token = localStorage.getItem('token');
+let isLoggedIn = false;
+
+if(token !== null && token !== ''){
+    isLoggedIn = true;
+}
+
 function Header() {
     return (
         <>
@@ -19,8 +26,8 @@ function Header() {
                         <ul className="lg:flex items-center justify-between text-base text-white pt-4 lg:pt-0">
                             <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/">Startsida</Link></li>
                             <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/barber">Frisör</Link></li>
-                            <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/mybookings">Mina bokningar</Link></li>
-                            <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/login">Logga in</Link></li>
+                            {isLoggedIn ? <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/mybookings">Mina bokningar</Link></li> : null}
+                            {isLoggedIn ? <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/logout">Logga ut</Link></li> : <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/login">Logga in</Link></li> }
                         </ul>
                     </nav>
                 </div>

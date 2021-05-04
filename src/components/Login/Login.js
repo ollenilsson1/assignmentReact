@@ -8,6 +8,7 @@ function Login() {
     const history = useHistory();
     const [EnteredEmail, setEmail] = useState('');
     const [EnteredPassword, setPassword] = useState('');
+    
 
     function emailChangeHandler(event) {
         setEmail(event.target.value);
@@ -26,8 +27,9 @@ function Login() {
             password: EnteredPassword,
         })
             .then((res) => {
-                localStorage.setItem('token', res.data.jwt); 
+                localStorage.setItem('token', res.data.jwt);
                 history.push("/barber");
+                window.location.reload();
             })
             .catch(error => {
                 console.log('Error Message: ', error);

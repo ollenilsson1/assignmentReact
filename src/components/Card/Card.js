@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 
 /* hårdkodade bilder, ska komma från loopen/backend i framtiden */
 
+
 function Card({title, price, desc, img}) {
+ 
+
+
   return (
     <div className="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-8">
 
@@ -18,7 +22,7 @@ function Card({title, price, desc, img}) {
         </div>
       </div>
     </div>
-
+     
   );
 }
 
