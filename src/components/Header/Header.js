@@ -7,9 +7,18 @@ let isLoggedIn = false;
 
 if(token !== null && token !== ''){
     isLoggedIn = true;
-}
+} 
 
 function Header() {
+
+   /*  const  [JWT, setJWT] = useState(false);
+
+    useEffect(() => {
+        setJWT(true);
+    }, [JWT]) */
+
+    
+
     return (
         <>
             <header className="lg:px-16 px-6 bg-gray-700 flex flex-wrap items-center lg:py-0 py-2">
