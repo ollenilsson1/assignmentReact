@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, {useState, useEffect } from 'react';
 import { Link, useHistory } from "react-router-dom";
 
 
@@ -8,6 +8,8 @@ function Login() {
     const history = useHistory();
     const [EnteredEmail, setEmail] = useState('');
     const [EnteredPassword, setPassword] = useState('');
+    const [JWT, setJWT] = useState("");
+    const [UserId, setUserId] = useState("");
     
 
     function emailChangeHandler(event) {
@@ -18,6 +20,15 @@ function Login() {
         setPassword(event.target.value);
     };
 
+    useEffect(()=>{
+        const jwt = localStorage.getItem("token");
+        setJWT(jwt);
+
+        const userid = localStorage.getItem('userid');
+        setUserId(userid);
+
+    }, [JWT], [UserId])
+    
     /* Måste man ha async när det är i ett event submit? */
     async function submitHandler(event) {
         event.preventDefault();
@@ -28,18 +39,13 @@ function Login() {
         })
             .then((res) => {
                 localStorage.setItem('token', res.data.jwt);
+                localStorage.setItem('userid', res.data.user.id);
                 history.push("/barber");
-                window.location.reload();
             })
             .catch(error => {
                 console.log('Error Message: ', error);
             })
     }
-
-
-
-
-
 
     return (
 
