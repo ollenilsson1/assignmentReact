@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from "axios";
 import Modal from "react-modal";
 
-function Card({ key, title, price, desc, img }) {
+function Card({productid, title, price, desc, img }) {
   
   const [modalIsOpen, setIsOpen] = useState(false);
   const [EnteredName, setName] = useState('');
@@ -13,9 +13,6 @@ function Card({ key, title, price, desc, img }) {
 
   const userid = localStorage.getItem('userid');
   
-  
-
-
   Modal.setAppElement('#root');
 
   const customStyles = {
@@ -36,7 +33,6 @@ function Card({ key, title, price, desc, img }) {
   function closeModal() {
     setIsOpen(false)
   }
-
 
   function nameChangeHandler(event) {
     setName(event.target.value);
@@ -68,7 +64,7 @@ function Card({ key, title, price, desc, img }) {
       timeToAppointment: new Date(EnteredDateTime),
       message: EnteredMessage,
       user: userid,
-      product: key,
+      product: productid,
 
     })
       .then((res) => {
@@ -84,7 +80,7 @@ function Card({ key, title, price, desc, img }) {
   }
 
   return (
-    <div className="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-8" id={key}>
+    <div className="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-8" id={productid}>
 
       <img src={`http://localhost:1337${img.url}`} alt="" className="overflow-hidden"></img>
       <div className="p-4">
