@@ -50,13 +50,7 @@ function AddService(){
         }).catch((error) => {
             console.log(error);
         })
-
-
-
     }
-
-    
-
     return (
         <div className="flex items-center min-h-screen bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto">

@@ -36,6 +36,7 @@ function CardList() {
                 return (
 
                     <Card key={product.id} img={product.img} title={product.title} desc={product.description} price={product.price} />
+                   
 
                 )
 
