@@ -9,6 +9,7 @@ function AddService(){
     const [EnteredPrice, setPrice] = useState('');
     const [EnteredImage, setImage] = useState('');
     
+    const token = localStorage.getItem('token');
 
     function titleChangeHandler(event) {
         setTitle(event.target.value);
@@ -33,6 +34,10 @@ function AddService(){
             title: EnteredTitle,
             description: EnteredDescription,
             price: EnteredPrice
+        },
+        {headers: {
+            Authorization: `Bearer ${token}`,
+          }  
         }).then( (response)=>{
             console.log(response.data);
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Modal from "react-modal";
 
@@ -11,7 +11,11 @@ function Card({productid, title, price, desc, img }) {
   const [EnteredDateTime, setDateTime] = useState('');
   const [EnteredMessage, setMessage] = useState('');
 
+  /* const[UserInfo, setUserInfo] = useState([]); */
+
   const userid = localStorage.getItem('userid');
+  const token = localStorage.getItem('token');
+
   
   Modal.setAppElement('#root');
 
@@ -65,23 +69,44 @@ function Card({productid, title, price, desc, img }) {
       message: EnteredMessage,
       user: userid,
       product: productid,
-
+    },
+    {headers: {
+        Authorization: `Bearer ${token}`,
+      }  
     })
       .then((res) => {
 
         if (res.status === 200) {
           console.log(res);
+          /* Skicka till bekräftelsesida / mybookings */
         }
 
       })
       .catch(error => {
         console.log('Error message: ', error);
+        /* Skicka till errorsida / registrera */
       })
   }
 
+  /* för placeholder 
+  useEffect(() => {
+    const userid = localStorage.getItem('userid');
+
+    const fetchProducts = async () => {
+      const response = await axios.get(`http://localhost:1337/users?_where[1][id]=${userid}`);
+
+
+      setUserInfo(response.data)
+    }
+
+    fetchProducts();
+  }, [])
+  */
+  
+  
   return (
     <div className="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-8" id={productid}>
-
+       
       <img src={`http://localhost:1337${img.url}`} alt="" className="overflow-hidden"></img>
       <div className="p-4">
         <h3 className="font-medium text-gray-600 text-lg my-2 uppercase text-center">{title}</h3>
@@ -104,8 +129,8 @@ function Card({productid, title, price, desc, img }) {
                     <input type="text" name="name" id="name" value={EnteredName} onChange={nameChangeHandler} placeholder="För och efternamn.." required className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
                   </div>
                   <div className="mb-6">
-                    <label htmlFor="email" className="block mb-2 text-sm text-gray-600 dark:text-gray-400">Email Adress</label>
-                    <input type="email" name="email" id="email" value={EnteredEmail} onChange={emailChangeHandler} placeholder="Fyll i din email adress.." required className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
+                    <label htmlFor="email" className="block mb-2 text-sm text-gray-600 dark:text-gray-400">Email</label>
+                    <input type="email" name="email" id="email" value={EnteredEmail} onChange={emailChangeHandler} placeholder="Email.." required className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
                   </div>
                   <div className="mb-6">
 
