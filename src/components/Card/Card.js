@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
 import Modal from "react-modal";
+import { useHistory } from 'react-router';
 
 function Card({productid, title, price, desc, img }) {
   
@@ -15,6 +16,7 @@ function Card({productid, title, price, desc, img }) {
 
   const userid = localStorage.getItem('userid');
   const token = localStorage.getItem('token');
+  const history = useHistory();
 
   
   Modal.setAppElement('#root');
@@ -78,12 +80,14 @@ function Card({productid, title, price, desc, img }) {
 
         if (res.status === 200) {
           console.log(res);
+          history.push("/mybookings");
           /* Skicka till bekräftelsesida / mybookings */
         }
 
       })
       .catch(error => {
         console.log('Error message: ', error);
+        history.push("/login");
         /* Skicka till errorsida / registrera */
       })
   }
@@ -113,6 +117,7 @@ function Card({productid, title, price, desc, img }) {
         <p className="text-center">{desc}</p>
         <p className="text-center">{price}</p>
         <div className="mt-5 text-center">
+          {/* conditional rendering för boka knappen isloggedin */}
           <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={openModal} >boka</button>
 
           <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} contentLabel="Example Modal">
