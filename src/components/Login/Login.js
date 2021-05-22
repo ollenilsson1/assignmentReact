@@ -41,6 +41,7 @@ function Login() {
                 localStorage.setItem('token', res.data.jwt);
                 localStorage.setItem('userid', res.data.user.id);
                 history.push("/barber");
+                window.location.reload();
             })
             .catch(error => {
                 console.log('Error Message: ', error);

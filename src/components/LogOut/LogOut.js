@@ -1,8 +1,8 @@
 import React, { useState, useEffect} from 'react'
-
+import { useHistory } from "react-router-dom";
 
 function LogOut() {
-
+    const history = useHistory();
     let token = localStorage.getItem("token");
     const [JWT, setJWT] = useState(token);
 
@@ -13,8 +13,11 @@ function LogOut() {
 
 
     localStorage.removeItem("token");
+    history.push("/");
+    window.location.reload();
 
     //behöver window.location.reload i nått if statement
+    //Remove userid eller clear localstorage
 
 
     return (
