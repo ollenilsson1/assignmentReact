@@ -49,7 +49,7 @@ function Mybookings() {
 
   /* get request */
   useEffect(() => {
-    /* måste ligga i useeffect? */
+    
     const userid = localStorage.getItem('userid');
     const token = localStorage.getItem('token');
 
@@ -86,13 +86,15 @@ function Mybookings() {
 
     <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
       {products.map((product) => {
+        
         return (
 
           <div key={product.id} className="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-8">
             <img src={`http://localhost:1337${product.product.img.url}`} alt="barber" className="overflow-hidden"></img>
             <div className="p-4">
               <h3 className="font-medium text-gray-600 text-lg my-2 uppercase text-center">{product.product.title}</h3>
-              <p className="text-center">{product.product.description}</p>
+              <p className="text-center">{product.timeToAppointment.toString().slice(0, 10)}</p>
+              <p className="text-center">{product.timeToAppointment.toString().slice(11, 16)}</p>
               <p className="text-center">{product.product.price}kr</p>
               <div className="mt-5 text-center">
                 <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={openModal}>Boka om</button>

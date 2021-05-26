@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 
 function AddService(){
@@ -10,6 +11,7 @@ function AddService(){
     const [EnteredImage, setImage] = useState('');
     
     const token = localStorage.getItem('token');
+    const history = useHistory();
 
     function titleChangeHandler(event) {
         setTitle(event.target.value);
@@ -39,8 +41,6 @@ function AddService(){
             Authorization: `Bearer ${token}`,
           }  
         }).then( (response)=>{
-            console.log(response.data);
-
             const data = new FormData();
 
             data.append("files" , EnteredImage);
@@ -49,7 +49,7 @@ function AddService(){
             data.append("field", "img");
 
             axios.post("http://localhost:1337/upload", data)
-            .then((image) => console.log(image))
+            .then(() => history.push('/barber'))
             .catch((error) => console.log(error))
 
         }).catch((error) => {

@@ -1,18 +1,20 @@
-import React, { useState, useEffect} from 'react'
+import React from 'react'
 import { useHistory } from "react-router-dom";
 
 function LogOut() {
     const history = useHistory();
-    let token = localStorage.getItem("token");
-    const [JWT, setJWT] = useState(token);
+    /*let token = localStorage.getItem("token");
+     const [JWT, setJWT] = useState(token);
 
     useEffect(() => {
         const removeJWT = localStorage.removeItem("token");
         setJWT(removeJWT);
-    }, [JWT])
+    }, [JWT]) */
 
 
     localStorage.removeItem("token");
+    localStorage.removeItem('userid');
+    localStorage.removeItem('role');
     history.push("/");
     window.location.reload();
 

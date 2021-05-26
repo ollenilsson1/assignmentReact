@@ -38,8 +38,10 @@ function Login() {
             password: EnteredPassword,
         })
             .then((res) => {
+                console.log(res);
                 localStorage.setItem('token', res.data.jwt);
                 localStorage.setItem('userid', res.data.user.id);
+                localStorage.setItem('role', res.data.user.role.type);
                 history.push("/barber");
                 window.location.reload();
             })
