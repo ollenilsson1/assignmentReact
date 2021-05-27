@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from "react-router-dom";
 
 
@@ -10,7 +10,7 @@ function Login() {
     const [EnteredPassword, setPassword] = useState('');
     const [JWT, setJWT] = useState("");
     const [UserId, setUserId] = useState("");
-    
+
 
     function emailChangeHandler(event) {
         setEmail(event.target.value);
@@ -20,7 +20,7 @@ function Login() {
         setPassword(event.target.value);
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         const jwt = localStorage.getItem("token");
         setJWT(jwt);
 
@@ -28,7 +28,7 @@ function Login() {
         setUserId(userid);
 
     }, [JWT], [UserId])
-    
+
     /* Måste man ha async när det är i ett event submit? */
     async function submitHandler(event) {
         event.preventDefault();

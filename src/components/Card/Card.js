@@ -3,8 +3,8 @@ import axios from "axios";
 import Modal from "react-modal";
 import { useHistory } from 'react-router';
 
-function Card({productid, title, price, desc, img }) {
-  
+function Card({ productid, title, price, desc, img }) {
+
   const [modalIsOpen, setIsOpen] = useState(false);
   const [EnteredName, setName] = useState('');
   const [EnteredEmail, setEmail] = useState('');
@@ -12,13 +12,10 @@ function Card({productid, title, price, desc, img }) {
   const [EnteredDateTime, setDateTime] = useState('');
   const [EnteredMessage, setMessage] = useState('');
 
-  /* const[UserInfo, setUserInfo] = useState([]); */
-
   const userid = localStorage.getItem('userid');
   const token = localStorage.getItem('token');
   const history = useHistory();
 
-  
   Modal.setAppElement('#root');
 
   const customStyles = {
@@ -62,7 +59,7 @@ function Card({productid, title, price, desc, img }) {
 
   function submitHandler(event) {
     event.preventDefault();
-  
+
     axios.post('http://localhost:1337/bookings', {
       name: EnteredName,
       email: EnteredEmail,
@@ -72,52 +69,34 @@ function Card({productid, title, price, desc, img }) {
       user: userid,
       product: productid,
     },
-    {headers: {
-        Authorization: `Bearer ${token}`,
-      }  
-    })
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      })
       .then((res) => {
 
         if (res.status === 200) {
-          console.log(res);
           history.push("/mybookings");
-          /* Skicka till bekräftelsesida / mybookings */
         }
 
       })
       .catch(error => {
         console.log('Error message: ', error);
         history.push("/login");
-        /* Skicka till errorsida / registrera */
       })
   }
 
-  /* för placeholder 
-  useEffect(() => {
-    const userid = localStorage.getItem('userid');
-
-    const fetchProducts = async () => {
-      const response = await axios.get(`http://localhost:1337/users?_where[1][id]=${userid}`);
-
-
-      setUserInfo(response.data)
-    }
-
-    fetchProducts();
-  }, [])
-  */
-  
-  
   return (
     <div className="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-8" id={productid}>
-       
+
       <img src={`http://localhost:1337${img.url}`} alt="" className="overflow-hidden"></img>
       <div className="p-4">
         <h3 className="font-medium text-gray-600 text-lg my-2 uppercase text-center">{title}</h3>
         <p className="text-center">{desc}</p>
         <p className="text-center">{price}</p>
         <div className="mt-5 text-center">
-          {/* conditional rendering för boka knappen isloggedin */}
+
           <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={openModal} >boka</button>
 
           <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} contentLabel="Example Modal">

@@ -5,10 +5,10 @@ import Modal from 'react-modal';
 function Mybookings() {
   const [products, setProducts] = useState([]);
 
-  
+
   const token = localStorage.getItem('token');
 
-  /* för modal */
+  /* för modal, fungerar inte ännu ska fixa så man kan byta bokad tid */
   const [modalIsOpen, setIsOpen] = useState(false);
   const [EnteredDateTime, setDateTime] = useState('');
   const [EnteredMessage, setMessage] = useState('');
@@ -49,7 +49,7 @@ function Mybookings() {
 
   /* get request */
   useEffect(() => {
-    
+
     const userid = localStorage.getItem('userid');
     const token = localStorage.getItem('token');
 
@@ -77,7 +77,6 @@ function Mybookings() {
         }
       })
     if (response.status === 200) {
-      console.log(response);
       window.location.reload();
     }
   }
@@ -86,7 +85,7 @@ function Mybookings() {
 
     <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
       {products.map((product) => {
-        
+
         return (
 
           <div key={product.id} className="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-8">
