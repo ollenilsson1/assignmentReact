@@ -1,129 +1,30 @@
 import React, { useState } from 'react';
-import axios from "axios";
 import Modal from "react-modal";
-import { useHistory } from 'react-router';
 
-function Card({ productid, title, price, desc, img }) {
+function updateModal(){
+    const [modalIsOpen, setIsOpen] = useState(false);
+    Modal.setAppElement('#root');
 
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [EnteredName, setName] = useState('');
-  const [EnteredEmail, setEmail] = useState('');
-  const [EnteredMobileNumber, setMobileNumber] = useState('');
-  const [EnteredDateTime, setDateTime] = useState('');
-  const [EnteredMessage, setMessage] = useState('');
-
-  const history = useHistory();
-
-  const userid = localStorage.getItem('userid');
-  const token = localStorage.getItem('token');
-  const role = localStorage.getItem('role');
-
-  let isAdmin = false;
-
-  if (role === 'admin') {
-    isAdmin = true;
-  }
-
-  Modal.setAppElement('#root');
-
-  const customStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)'
-    }
-  };
-
-  function openModal() {
-    setIsOpen(true)
-  }
-
-  function closeModal() {
-    setIsOpen(false)
-  }
-
-  function nameChangeHandler(event) {
-    setName(event.target.value);
-  };
-
-  function emailChangeHandler(event) {
-    setEmail(event.target.value);
-  };
-
-  function mobileNumberChangeHandler(event) {
-    setMobileNumber(event.target.value);
-  };
-
-  function dateTimeChangeHandler(event) {
-    setDateTime(event.target.value);
-  };
-
-  function messageChangeHandler(event) {
-    setMessage(event.target.value);
-  };
-
-  function submitHandler(event) {
-    event.preventDefault();
-
-    axios.post('http://localhost:1337/bookings', {
-      name: EnteredName,
-      email: EnteredEmail,
-      phone: EnteredMobileNumber,
-      timeToAppointment: new Date(EnteredDateTime),
-      message: EnteredMessage,
-      user: userid,
-      product: productid,
-    },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    const customStyles = {
+        content: {
+          top: '50%',
+          left: '50%',
+          right: 'auto',
+          bottom: 'auto',
+          marginRight: '-50%',
+          transform: 'translate(-50%, -50%)'
         }
-      })
-      .then((res) => {
-
-        if (res.status === 200) {
-          history.push("/mybookings");
-        }
-
-      })
-      .catch(error => {
-        console.log('Error message: ', error);
-        history.push("/login");
-      })
-  }
-
-    /* delete request */
-    async function deleteProduct(id) {
-      const response = await axios.delete(`http://localhost:1337/products/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          }
-        })
-      if (response.status === 200) {
-        window.location.reload();
+      };
+    
+      function openModal() {
+        setIsOpen(true)
       }
-    }
-
-
-  return (
-    <div className="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-8" id={productid}>
-
-      <img src={`http://localhost:1337${img.url}`} alt="" className="overflow-hidden"></img>
-      <div className="p-4">
-        <h3 className="font-medium text-gray-600 text-lg my-2 uppercase text-center">{title}</h3>
-        <p className="text-center">{desc}</p>
-        <p className="text-center">{price}</p>
-        <div className="mt-5 text-center">
-
-          {/* <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={openModal} >boka</button> */}
-          {isAdmin ? <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={() => deleteProduct(productid)}>Radera produkt</button> : <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={openModal} >boka</button>}
-          {isAdmin ? <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" >Ändra produkt</button> : null}
-
-          <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} contentLabel="Example Modal">
+    
+      function closeModal() {
+        setIsOpen(false)
+      }
+    return(
+        <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} contentLabel="Example Modal">
             <button onClick={closeModal}>close</button>
             <div className="max-w-md mx-auto my-10 bg-white p-5 rounded-md shadow-sm">
               <div className="text-center">
@@ -164,12 +65,7 @@ function Card({ productid, title, price, desc, img }) {
               </div>
             </div>
           </Modal>
-        </div>
-      </div>
-    </div>
-
-  );
+    )
 }
 
-export default Card;
-
+export default updateModal;
