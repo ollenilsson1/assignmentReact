@@ -20,6 +20,7 @@ function Card({ productid, title, price, desc, img }) {
 
   let isAdmin = false;
 
+
   if (role === 'admin') {
     isAdmin = true;
   }
@@ -95,18 +96,90 @@ function Card({ productid, title, price, desc, img }) {
       })
   }
 
-    /* delete request */
-    async function deleteProduct(id) {
-      const response = await axios.delete(`http://localhost:1337/products/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          }
-        })
-      if (response.status === 200) {
-        window.location.reload();
-      }
+
+  /* för admin update product */
+  const [updateModalIsOpen, setUpdateModalIsOpen] = useState(false);
+
+  const [EnteredTitle, setTitle] = useState('');
+  const [EnteredDescription, setDescription] = useState('');
+  const [EnteredPrice, setPrice] = useState('');
+  const [EnteredImage, setImage] = useState('');
+
+
+  function openUpdateModal() {
+    setUpdateModalIsOpen(true)
+
+  }
+
+  function closeUpdateModal() {
+    setUpdateModalIsOpen(false)
+  }
+
+
+
+  function titleChangeHandler(event) {
+    setTitle(event.target.value);
+  };
+
+  function descriptionChangeHandler(event) {
+    setDescription(event.target.value);
+  };
+
+  function priceChangeHandler(event) {
+    setPrice(event.target.value);
+  };
+
+  function imageChangeHandler(event) {
+    setImage(event.target.files[0]);
+  }
+
+
+  function updateSubmitHandler(event) {
+
+    event.preventDefault();
+    axios.put(`http://localhost:1337/products/${productid}`, {
+      title: EnteredTitle,
+      description: EnteredDescription,
+      price: EnteredPrice
+    },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      }).then((response) => {
+        const data = new FormData();
+
+        data.append("files", EnteredImage);
+        data.append("ref", "product");
+        data.append("refId", response.data.id);
+        data.append("field", "img");
+
+        axios.post("http://localhost:1337/upload", data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          })
+          .then(() => history.push('/barber'))
+          .catch((error) => console.log(error))
+
+      }).catch((error) => {
+        console.log(error);
+      })
+  }
+
+  /* delete request */
+  async function deleteProduct(id) {
+    const response = await axios.delete(`http://localhost:1337/products/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      })
+    if (response.status === 200) {
+      window.location.reload();
     }
+  }
 
 
   return (
@@ -121,7 +194,7 @@ function Card({ productid, title, price, desc, img }) {
 
           {/* <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={openModal} >boka</button> */}
           {isAdmin ? <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={() => deleteProduct(productid)}>Radera produkt</button> : <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={openModal} >boka</button>}
-          {isAdmin ? <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" >Ändra produkt</button> : null}
+          {isAdmin ? <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={() => openUpdateModal(productid)}>Ändra produkt</button> : null}
 
           <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} contentLabel="Example Modal">
             <button onClick={closeModal}>close</button>
@@ -163,6 +236,44 @@ function Card({ productid, title, price, desc, img }) {
                 </form>
               </div>
             </div>
+          </Modal>
+          {/* admin update modal */}
+          <Modal isOpen={updateModalIsOpen} onRequestClose={closeUpdateModal} style={customStyles} contentLabel="Update product Modal">
+            <button onClick={closeUpdateModal}>close</button>
+            <div className="max-w-md mx-auto my-10 bg-white p-5 rounded-md shadow-sm">
+              <div className="text-center">
+                <h1 className="my-3 text-3xl font-semibold text-gray-700 dark:text-gray-200">Uppdatera produktinformation</h1>
+              </div>
+              <div className="m-7">
+                <form id="form" onSubmit={updateSubmitHandler}>
+                  <div className="mb-6">
+                    <label htmlFor="name" className="block mb-2 text-sm text-gray-600 dark:text-gray-400">Rubrik</label>
+                    <input type="text" name="name" id="name" value={EnteredTitle} onChange={titleChangeHandler} placeholder="Rubrik.." required className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
+                  </div>
+                  <div className="mb-6">
+                    <label htmlFor="description" className="block mb-2 text-sm text-gray-600 dark:text-gray-400">Beskrivning</label>
+                    <input type="text" name="description" id="description" value={EnteredDescription} onChange={descriptionChangeHandler} placeholder="Beskrivning.." required className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
+                  </div>
+                  <div className="mb-6">
+
+                    <label htmlFor="price" className="text-sm text-gray-600 dark:text-gray-400">Pris</label>
+                    <input type="number" name="price" id="price" value={EnteredPrice} onChange={priceChangeHandler} placeholder="Pris.." required className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
+                  </div>
+
+                  <div className="mb-6">
+                    <label htmlFor="message" className="block mb-2 text-sm text-gray-600 dark:text-gray-400">Ladda upp en bild</label>
+                    <input type="file" name="file" onChange={imageChangeHandler} />
+                  </div>
+
+                  <div className="mb-6">
+                    <button type="submit" className="w-full px-3 py-4 text-white bg-indigo-500 rounded-md focus:bg-indigo-600 focus:outline-none">Uppdatera produkt</button>
+                  </div>
+                  <p className="text-base text-center text-gray-400" id="result">
+                  </p>
+                </form>
+              </div>
+            </div>
+
           </Modal>
         </div>
       </div>

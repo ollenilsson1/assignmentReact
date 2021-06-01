@@ -53,15 +53,12 @@ function Mybookings() {
 
   //stripe
   const handleClick = async (event) => {
-    // Get Stripe.js instance
     const stripe = await stripePromise;
 
-    // Call your backend to create the Checkout Session
     const response = await axios.post("http://localhost:4242/create-checkout-session")
     
     const sessionID = await response.data.id
 
-    // When the customer clicks on the button, redirect them to Checkout.
     const result = await stripe.redirectToCheckout({
       sessionId: sessionID,
     });
@@ -124,7 +121,7 @@ function Mybookings() {
               <div className="mt-5 text-center">
                 <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={openModal}>Boka om</button>
                 <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={() => cancelBooking(product.id)}>Avboka</button>
-                <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" role="link" onClick={handleClick}>Checkout</button>
+                <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" role="link" onClick={handleClick}>Betala direkt</button>
                 <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} contentLabel="Example Modal">
                   <button onClick={closeModal}>close</button>
                   <div className="max-w-md mx-auto my-10 bg-white p-5 rounded-md shadow-sm">
