@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe('pk_test_51Ix6SLCSB2UR4oqqhLqBhMH9V60bqzrQlXMYmVtROqUMthfXbyFoTV5eUM24EQjGtoTFVhMu0ASOMnDlYrdA466g00DBzN8jgx');
 
 function Mybookings() {
   const [products, setProducts] = useState([]);
@@ -22,7 +25,7 @@ function Mybookings() {
       right: 'auto',
       bottom: 'auto',
       marginRight: '-50%',
-      transform: 'translate(-50%, -50%)'
+      transform: 'translate(-50%, -50%)',
     }
   };
 
@@ -46,6 +49,26 @@ function Mybookings() {
   function submitHandler() {
     console.log("hej");
   }
+
+
+  //stripe
+  const handleClick = async (event) => {
+    const stripe = await stripePromise;
+
+    const response = await axios.post("http://localhost:4242/create-checkout-session")
+    
+    const sessionID = await response.data.id
+
+    const result = await stripe.redirectToCheckout({
+      sessionId: sessionID,
+    });
+
+    if (result.error) {
+      // If `redirectToCheckout` fails due to a browser or network
+      // error, display the localized error message to your customer
+      // using `result.error.message`.
+    }
+  };
 
   /* get request */
   useEffect(() => {
@@ -98,6 +121,7 @@ function Mybookings() {
               <div className="mt-5 text-center">
                 <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={openModal}>Boka om</button>
                 <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={() => cancelBooking(product.id)}>Avboka</button>
+                <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" role="link" onClick={handleClick}>Betala direkt</button>
                 <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} contentLabel="Example Modal">
                   <button onClick={closeModal}>close</button>
                   <div className="max-w-md mx-auto my-10 bg-white p-5 rounded-md shadow-sm">
