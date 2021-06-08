@@ -7,7 +7,7 @@ import LogOut from './LogOut/LogOut';
 import Register from './Register/Register';
 import ForgotPassword from './ForgotPassword/ForgotPassword';
 import ResetPassword from './ResetPassword/ResetPassword';
-import Mybookings from './Booking/Mybookings';
+import BookingList from './Booking/BookingList';
 import AddService from './AddService/AddService';
 import Contact from './Contact/Contact';
 import Footer from './Footer/Footer';
@@ -25,7 +25,7 @@ export default function AppRoute() {
                 <Route path="/register" exact component={Register} />
                 <Route path="/forgotpassword" exact component={ForgotPassword} />
                 <Route path="/resetpassword" component={ResetPassword} />
-                <Route path="/mybookings" exact component={Mybookings} />
+                <Route path="/mybookings" exact component={BookingList} />
                 <Route path="/addservice" component={AddService} />
                 <Route path="/contact" exact component={Contact} />
                 <Footer/>

@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import { loadStripe } from '@stripe/stripe-js';
 
 const stripePromise = loadStripe('pk_test_51Ix6SLCSB2UR4oqqhLqBhMH9V60bqzrQlXMYmVtROqUMthfXbyFoTV5eUM24EQjGtoTFVhMu0ASOMnDlYrdA466g00DBzN8jgx');
 
-function Mybookings() {
-  const [products, setProducts] = useState([]);
+function Mybookings(bookingid, img, title, time, price) {
+  
 
+  /* Ska vara annan props när den är färdig men det här är det som fungerar nu */
 
   const token = localStorage.getItem('token');
 
@@ -55,7 +56,7 @@ function Mybookings() {
   const handleClick = async (event) => {
     const stripe = await stripePromise;
 
-    const response = await axios.post("http://localhost:4242/create-checkout-session")
+    const response = await axios.post("http://localhost:4242/create-checkout-session", {name:bookingid.title, price:bookingid.price})
     
     const sessionID = await response.data.id
 
@@ -70,26 +71,6 @@ function Mybookings() {
     }
   };
 
-  /* get request */
-  useEffect(() => {
-
-    const userid = localStorage.getItem('userid');
-    const token = localStorage.getItem('token');
-
-    const fetchProducts = async () => {
-      const response = await axios.get(`http://localhost:1337/bookings?_where[1][user.id]=${userid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          }
-        })
-
-
-      setProducts(response.data)
-    }
-
-    fetchProducts();
-  }, [])
 
   /* delete request */
   async function cancelBooking(id) {
@@ -106,21 +87,16 @@ function Mybookings() {
 
   return (
 
-    <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
-      {products.map((product) => {
-
-        return (
-
-          <div key={product.id} className="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-8">
-            <img src={`http://localhost:1337${product.product.img.url}`} alt="barber" className="overflow-hidden"></img>
+          <div key={bookingid} className="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-8">
+            <img src={`http://localhost:1337${bookingid.img.url}`} alt="barber" className="overflow-hidden"></img>
             <div className="p-4">
-              <h3 className="font-medium text-gray-600 text-lg my-2 uppercase text-center">{product.product.title}</h3>
-              <p className="text-center">{product.timeToAppointment.toString().slice(0, 10)}</p>
-              <p className="text-center">{product.timeToAppointment.toString().slice(11, 16)}</p>
-              <p className="text-center">{product.product.price}kr</p>
+              <h3 className="font-medium text-gray-600 text-lg my-2 uppercase text-center">{bookingid.title}</h3>
+              <p className="text-center">{bookingid.time.toString().slice(0, 10)}</p>
+              <p className="text-center">{bookingid.time.toString().slice(11, 16)}</p> 
+              <p className="text-center">{bookingid.price}kr</p>
               <div className="mt-5 text-center">
                 <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={openModal}>Boka om</button>
-                <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={() => cancelBooking(product.id)}>Avboka</button>
+                <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={() => cancelBooking(bookingid)}>Avboka</button>
                 <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" role="link" onClick={handleClick}>Betala direkt</button>
                 <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} contentLabel="Example Modal">
                   <button onClick={closeModal}>close</button>
@@ -154,14 +130,7 @@ function Mybookings() {
               </div>
             </div>
           </div>
-
-
         )
-      })}
-
-    </div>
-
-  );
 }
 
 export default Mybookings;
