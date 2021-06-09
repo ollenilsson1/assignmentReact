@@ -69,7 +69,7 @@ function Card({ productid, title, price, desc, img }) {
   function submitHandler(event) {
     event.preventDefault();
 
-    axios.post('http://localhost:1337/bookings', {
+    axios.post('https://boiling-dusk-80419.herokuapp.com/bookings', {
       name: EnteredName,
       email: EnteredEmail,
       phone: EnteredMobileNumber,
