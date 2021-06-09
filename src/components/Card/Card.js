@@ -185,7 +185,7 @@ function Card({ productid, title, price, desc, img }) {
   return (
     <div className="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-8" id={productid}>
 
-      <img src={`http://localhost:1337${img.url}`} alt="" className="overflow-hidden"></img>
+      <img src={`https://boiling-dusk-80419.herokuapp.com${img.url}`} alt="" className="overflow-hidden"></img>
       <div className="p-4">
         <h3 className="font-medium text-gray-600 text-lg my-2 uppercase text-center">{title}</h3>
         <p className="text-center">{desc}</p>
