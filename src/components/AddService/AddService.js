@@ -32,7 +32,7 @@ function AddService() {
     function submitHandler(event) {
         event.preventDefault();
 
-        axios.post("http://localhost:1337/products", {
+        axios.post("https://boiling-dusk-80419.herokuapp.com/products", {
             title: EnteredTitle,
             description: EnteredDescription,
             price: EnteredPrice
@@ -49,7 +49,7 @@ function AddService() {
                 data.append("refId", response.data.id);
                 data.append("field", "img");
 
-                axios.post("http://localhost:1337/upload", data,
+                axios.post("https://boiling-dusk-80419.herokuapp.com/upload", data,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
