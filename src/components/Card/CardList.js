@@ -11,7 +11,7 @@ function CardList() {
     useEffect(() => {
 
         const fetchProducts = async () => {
-            const response = await axios.get(`http://localhost:1337/products?_limit=${loadPage}`);
+            const response = await axios.get(`https://boiling-dusk-80419.herokuapp.com/products?_limit=${loadPage}`);
 
             setProducts(response.data)
         }
@@ -36,7 +36,7 @@ function CardList() {
                 return (
 
                     <Card key={product.id} productid={product.id} img={product.img} title={product.title} desc={product.description} price={product.price} />
-                   
+
 
                 )
 
@@ -45,8 +45,8 @@ function CardList() {
             }
 
             <button onClick={showMore}>Load more</button>
-            
-            <button onClick={showLess}>Show less</button> 
+
+            <button onClick={showLess}>Show less</button>
         </div>
     )
 }
