@@ -137,7 +137,7 @@ function Card({ productid, title, price, desc, img }) {
   function updateSubmitHandler(event) {
 
     event.preventDefault();
-    axios.put(`http://localhost:1337/products/${productid}`, {
+    axios.put(`https://boiling-dusk-80419.herokuapp.com/products/${productid}`, {
       title: EnteredTitle,
       description: EnteredDescription,
       price: EnteredPrice
@@ -154,7 +154,7 @@ function Card({ productid, title, price, desc, img }) {
         data.append("refId", response.data.id);
         data.append("field", "img");
 
-        axios.post("http://localhost:1337/upload", data,
+        axios.post("https://boiling-dusk-80419.herokuapp.com/products/upload", data,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -170,7 +170,7 @@ function Card({ productid, title, price, desc, img }) {
 
   /* delete request */
   async function deleteProduct(id) {
-    const response = await axios.delete(`http://localhost:1337/products/${id}`,
+    const response = await axios.delete(`https://boiling-dusk-80419.herokuapp.com/products/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

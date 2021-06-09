@@ -13,7 +13,7 @@ function BookingList() {
         const token = localStorage.getItem('token');
 
         const fetchProducts = async () => {
-            const response = await axios.get(`http://localhost:1337/bookings?_where[1][user.id]=${userid}`,
+            const response = await axios.get(`https://boiling-dusk-80419.herokuapp.com/bookings?_where[1][user.id]=${userid}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

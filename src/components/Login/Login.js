@@ -33,7 +33,7 @@ function Login() {
     async function submitHandler(event) {
         event.preventDefault();
 
-        await axios.post('http://localhost:1337/auth/local', {
+        await axios.post('https://boiling-dusk-80419.herokuapp.com/auth/local', {
             identifier: EnteredEmail,
             password: EnteredPassword,
         })

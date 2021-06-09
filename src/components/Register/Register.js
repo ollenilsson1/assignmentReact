@@ -28,7 +28,7 @@ function Register() {
     function submitHandler(event) {
         event.preventDefault();
         /* fungerar bara när jag har username inte name */
-        axios.post('http://localhost:1337/auth/local/register', {
+        axios.post('https://boiling-dusk-80419.herokuapp.com/auth/local/register', {
             username: EnteredName,
             email: EnteredEmail,
             password: EnteredPassword,
