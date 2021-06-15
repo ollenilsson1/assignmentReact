@@ -11,6 +11,7 @@ import BookingList from './Booking/BookingList';
 import AddService from './AddService/AddService';
 import Contact from './Contact/Contact';
 import Footer from './Footer/Footer';
+import PrivateRoute from '../PrivateRoute';
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from '../Auth';
 
@@ -24,6 +25,7 @@ export default function AppRoute() {
             <Router>
                 <Header />
                 <Route path="/" exact component={Home} />
+                {/* <PrivateRoute path="/" exact component={Home} /> */}
                 <Route path="/barber" exact component={CardList} />
                 <Route path="/login" exact component={FireLogin} />
                 <Route path="/logout" component={LogOut} />
