@@ -12,17 +12,22 @@ import AddService from './AddService/AddService';
 import Contact from './Contact/Contact';
 import Footer from './Footer/Footer';
 import { Route, BrowserRouter as Router } from "react-router-dom";
+import { AuthProvider } from '../Auth';
+
+import FireLogin from "./Login/FireLogin";
+import FireRegister from "./Register/FireRegister";
 
 export default function AppRoute() {
     
     return (
+        <AuthProvider>
             <Router>
                 <Header />
                 <Route path="/" exact component={Home} />
                 <Route path="/barber" exact component={CardList} />
-                <Route path="/login" exact component={Login} />
+                <Route path="/login" exact component={FireLogin} />
                 <Route path="/logout" component={LogOut} />
-                <Route path="/register" exact component={Register} />
+                <Route path="/register" exact component={FireRegister} />
                 <Route path="/forgotpassword" exact component={ForgotPassword} />
                 <Route path="/resetpassword" component={ResetPassword} />
                 <Route path="/mybookings" exact component={BookingList} />
@@ -30,6 +35,7 @@ export default function AppRoute() {
                 <Route path="/contact" exact component={Contact} />
                 <Footer/>
             </Router>
+        </AuthProvider>
         
     )
 }
