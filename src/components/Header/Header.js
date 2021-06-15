@@ -8,9 +8,10 @@ const role = localStorage.getItem('role');
 
 let isLoggedIn = false;
 let isAdmin = false;
+let isAdminLoggedIn = false;
 
-if (token !== null && token !== '') {
-    isLoggedIn = true;
+if (token !== null && token !== '' && role === 'admin') {
+    isAdminLoggedIn = true;
 }
 
 if (role === 'admin') {
@@ -35,9 +36,11 @@ function Header() {
                         <ul className="lg:flex items-center justify-between text-base text-white pt-4 lg:pt-0">
                             <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/">Startsida</Link></li>
                             <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/barber">Frisör</Link></li>
-                            {isLoggedIn ? <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/mybookings">Mina bokningar</Link></li> : null}
-                            {isAdmin ? <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/addservice">Lägg till tjänster</Link></li> : null}
-                            {isLoggedIn ? <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/logout">Logga ut</Link></li> : <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/login">Logga in</Link></li>}
+                            {/* Behöver rendering för firebase logged in här */}
+                            <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/mybookings">Mina bokningar</Link></li>
+                            {isAdminLoggedIn ? <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/addservice">Lägg till tjänster</Link></li> : null}
+                            {isAdminLoggedIn ? <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/logout">Logga ut</Link></li> : <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/adminlogin">Logga in som admin</Link></li>}
+                            <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/login">Logga in</Link></li>
                             <button onClick={() => firebaseConfig.auth().signOut()}>Sign Out</button>
                         </ul>
                     </nav>

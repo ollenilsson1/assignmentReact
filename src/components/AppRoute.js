@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header/Header';
 import Home from './LandingPage/Home';
 import CardList from './Card/CardList';
-import Login from './Login/Login';
+import AdminLogin from './Login/AdminLogin';
 import LogOut from './LogOut/LogOut';
 import Register from './Register/Register';
 import ForgotPassword from './ForgotPassword/ForgotPassword';
@@ -27,6 +27,7 @@ export default function AppRoute() {
                 <Route path="/" exact component={Home} />
                 {/* <PrivateRoute path="/" exact component={Home} /> */}
                 <Route path="/barber" exact component={CardList} />
+                <Route path="/adminlogin" exact component={AdminLogin} />
                 <Route path="/login" exact component={FireLogin} />
                 <Route path="/logout" component={LogOut} />
                 <Route path="/register" exact component={FireRegister} />
