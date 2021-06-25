@@ -3,7 +3,7 @@ import axios from "axios";
 import Modal from "react-modal";
 import { useHistory } from 'react-router';
 
-import db from '../../FirebaseConfig';
+import { db } from '../../FirebaseConfig';
 
 import dotenv from 'dotenv';
 dotenv.config();

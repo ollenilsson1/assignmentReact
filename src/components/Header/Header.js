@@ -6,17 +6,13 @@ import firebaseConfig from '../../FirebaseConfig';
 const token = localStorage.getItem('token');
 const role = localStorage.getItem('role');
 
-let isLoggedIn = false;
-let isAdmin = false;
 let isAdminLoggedIn = false;
 
 if (token !== null && token !== '' && role === 'admin') {
     isAdminLoggedIn = true;
 }
 
-if (role === 'admin') {
-    isAdmin = true;
-}
+
 
 function Header() {
 
