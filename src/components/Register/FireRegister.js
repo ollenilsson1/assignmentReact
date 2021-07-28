@@ -1,16 +1,25 @@
 import React, { useCallback } from "react";
 import { withRouter } from "react-router";
-import FirebaseConfig from '../../FirebaseConfig';
+import FirebaseConfig, { db } from '../../FirebaseConfig';
 
 const FireRegister = ({ history }) => {
     const handleSignUp = useCallback(async event => {
         event.preventDefault();
-        const { email, password } = event.target.elements;
+        const noImg = 'no-image.png'
+        const { email, password, bio, } = event.target.elements;
         try {
             await FirebaseConfig
                 .auth()
-                .createUserWithEmailAndPassword(email.value, password.value);
-            history.push("/barber");
+                .createUserWithEmailAndPassword(email.value, password.value).then(cred => {
+                    const UserId = cred.user.uid;
+                    return db.collection('users').doc(cred.user.uid).set({
+                        bio: bio.value,
+                        imageUrl: `https://firebasestorage.googleapis.com/v0/b/${FirebaseConfig.storageBucket}/o/${noImg}?alt=media`, 
+                        UserId,
+                    })
+                }).then(() =>{
+                    history.push("/barber");
+                })
         } catch (error) {
             alert(error);
         }
@@ -33,6 +42,11 @@ const FireRegister = ({ history }) => {
 
             <label htmlFor="password" className="block mt-2 text-xs font-semibold text-gray-600 uppercase">Lösenord</label>
             <input id="password" type="password" name="password" placeholder="Lösenord.." autoComplete="current-password" className="block w-full py-3 px-1 mt-2 mb-4 text-gray-800 appearance-none border-b-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200" required />
+
+            <label htmlFor="password" className="block mt-2 text-xs font-semibold text-gray-600 uppercase">bio</label>
+            <input id="bio" type="text" name="bio" placeholder="bio" autoComplete="bio" className="block w-full py-3 px-1 mt-2 mb-4 text-gray-800 appearance-none border-b-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200" required />
+
+            <input id="picture" type="file" name="picture"/> 
 
             <button type="submit" className="w-full py-3 mt-10 bg-gray-800 rounded-sm font-medium text-white uppercase focus:outline-none hover:bg-gray-700 hover:shadow-none">Skapa konto</button>
 

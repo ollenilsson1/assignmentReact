@@ -14,6 +14,7 @@ import Footer from './Footer/Footer';
 import PrivateRoute from '../PrivateRoute';
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from '../Auth';
+import UserProfile from './UserProfile/UserProfile';
 
 import FireLogin from "./Login/FireLogin";
 import FireRegister from "./Register/FireRegister";
@@ -36,6 +37,7 @@ export default function AppRoute() {
                 <Route path="/mybookings" exact component={BookingList} />
                 <Route path="/addservice" component={AddService} />
                 <Route path="/contact" exact component={Contact} />
+                <Route path="/profile" exact component={UserProfile} />
                 <Footer/>
             </Router>
         </AuthProvider>
