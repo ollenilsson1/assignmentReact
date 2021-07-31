@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from "axios";
 import Modal from "react-modal";
 import { useHistory } from 'react-router';
 
 import { db } from '../../FirebaseConfig';
+import { AuthContext } from "../../Auth";
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -12,19 +13,27 @@ function Card({ productid, title, price, desc, img }) {
 
 
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [EnteredName, setName] = useState('');
+ /*  const [EnteredName, setName] = useState('');
   const [EnteredEmail, setEmail] = useState('');
-  const [EnteredMobileNumber, setMobileNumber] = useState('');
+  const [EnteredMobileNumber, setMobileNumber] = useState(''); */
   const [EnteredDateTime, setDateTime] = useState('');
   const [EnteredMessage, setMessage] = useState('');
 
   const history = useHistory();
 
-  const userid = localStorage.getItem('userid');
   const token = localStorage.getItem('token');
   const role = localStorage.getItem('role');
 
+  const { currentUser } = useContext(AuthContext);
+
+  let userid = null;
+    
+    if ( currentUser  !== null) {
+        userid = currentUser.uid;
+    }
+
   let isAdmin = false;
+
 
 
   if (role === 'admin') {
@@ -52,7 +61,7 @@ function Card({ productid, title, price, desc, img }) {
     setIsOpen(false)
   }
 
-  function nameChangeHandler(event) {
+ /*  function nameChangeHandler(event) {
     setName(event.target.value);
   };
 
@@ -62,7 +71,7 @@ function Card({ productid, title, price, desc, img }) {
 
   function mobileNumberChangeHandler(event) {
     setMobileNumber(event.target.value);
-  };
+  }; */
 
   function dateTimeChangeHandler(event) {
     setDateTime(event.target.value);
@@ -107,7 +116,7 @@ function Card({ productid, title, price, desc, img }) {
 
     db.collection("booking").add({
       productID: productid,
-      userID: userid,
+      userid: userid,
       title: title,
       description: desc,
       price: price,
