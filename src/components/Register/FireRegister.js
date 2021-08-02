@@ -9,7 +9,7 @@ const FireRegister = ({ history }) => {
         event.preventDefault();
         /* standard profilbild */
         const noImg = 'no-img.png'
-        const { email, password, name, } = event.target.elements;
+        const { email, password, name, phonenumber} = event.target.elements;
         try {
             await FirebaseConfig
                 .auth()
@@ -18,6 +18,7 @@ const FireRegister = ({ history }) => {
                     return db.collection('users').doc(cred.user.uid).set({
                         name: name.value,
                         email: email.value,
+                        phonenumber: phonenumber.value,
                         imageUrl: `https://firebasestorage.googleapis.com/v0/b/${process.env.REACT_APP_FIREBASE_STORAGE_BUCKET}/o/${noImg}?alt=media`, 
                         UserId,
                     })
@@ -49,6 +50,9 @@ const FireRegister = ({ history }) => {
 
             <label htmlFor="name" className="block mt-2 text-xs font-semibold text-gray-600 uppercase">Namn</label>
             <input id="name" type="text" name="name" placeholder="För och efternamn" autoComplete="name" className="block w-full py-3 px-1 mt-2 mb-4 text-gray-800 appearance-none border-b-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200" required />
+
+            <label htmlFor="phonenumber" className="block mt-2 text-xs font-semibold text-gray-600 uppercase">Namn</label>
+            <input id="phonenumber" type="number" name="phonenumber" placeholder="Telefonnummer.." autoComplete="phonenumber" className="block w-full py-3 px-1 mt-2 mb-4 text-gray-800 appearance-none border-b-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200" required />
 
             <button type="submit" className="w-full py-3 mt-10 bg-gray-800 rounded-sm font-medium text-white uppercase focus:outline-none hover:bg-gray-700 hover:shadow-none">Skapa konto</button>
 
