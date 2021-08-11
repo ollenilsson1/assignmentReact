@@ -73,7 +73,6 @@ function UserProfile() {
     function handleProfileUpdate(event) {
         event.preventDefault();
         /* standard profilbild */
-        const noImg = 'no-img.png'
         const { phonenumber, name, } = event.target.elements;
         db.doc(`/users/${userID}`).update({
             name: name.value,

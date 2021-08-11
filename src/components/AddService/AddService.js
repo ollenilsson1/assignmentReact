@@ -67,7 +67,8 @@ function AddService() {
             <div className="container mx-auto">
                 <div className="max-w-md mx-auto my-10 bg-white p-5 rounded-md shadow-sm">
                     <div className="text-center">
-                        <h1 className="my-3 text-3xl font-semibold text-gray-700 dark:text-gray-200">Lägg till en ny tjänst!</h1>
+                        <h1 className="my-3 text-3xl font-semibold text-gray-700 dark:text-gray-200">Admin sida</h1>
+                        <h2>Lägg till nya produkter</h2>
                     </div>
                     <div className="m-7">
                         <form id="form" onSubmit={submitHandler}>
