@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import FirebaseConfig, { db, Firebase } from '../../FirebaseConfig';
+import { useHistory } from 'react-router';
+import { db, Firebase } from '../../FirebaseConfig';
 import { AuthContext } from "../../Auth";
 import dotenv from 'dotenv';
 dotenv.config();
@@ -7,6 +8,7 @@ dotenv.config();
 
 function UserProfile() {
 
+    const history = useHistory();
     const { currentUser } = useContext(AuthContext);
     let userID = null;
 
@@ -14,7 +16,6 @@ function UserProfile() {
         userID = currentUser.uid;
     }
 
-    const [loading, setLoading] = useState(true);
     const [UserInfo, setUserInfo] = useState([]);
 
     useEffect(() => {
@@ -34,7 +35,6 @@ function UserProfile() {
                 }
 
                 setUserInfo(data);
-                setLoading(false);
 
 
             } catch (err) {
@@ -46,28 +46,6 @@ function UserProfile() {
         fetchData();
 
     }, []);
-    /*  useEffect(() => {
-         let userData = {};
-         db.doc(`/users/${userID}`).get()
-         .then(doc =>{
-             if(doc.exists){
-                 userData.credentials = doc.data();
-                 setUserInfo(userData)
-             } else {
-                 // doc.data() will be undefined in this case
-                 console.log("No such document!");
-             }
-         }).catch(function(error) {
-             console.log("Error getting document:", error);
-       });
-     },[]);   */
-
-
-
-    console.log(userID)
-    console.log(currentUser)
-    console.log(UserInfo.email)
-    console.log(loading);
 
 
     function handleProfileUpdate(event) {
@@ -78,122 +56,59 @@ function UserProfile() {
             name: name.value,
             phonenumber: phonenumber.value
         });
-
-
     }
 
     function imageChangeHandler(event) {
         const image = event.target.files[0];
         var storageRef = Firebase.storage().ref();
 
-        console.log(image.name)
-        console.log(image)
-
-        // Create the file metadata
         var metadata = {
             contentType: 'image/jpeg'
         };
 
-        // Upload file and metadata to the object 'images/mountains.jpg'
         var uploadTask = storageRef.child(image.name).put(image, metadata);
 
-        // Listen for state changes, errors, and completion of the upload.
-        uploadTask.on(Firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+        uploadTask.on(Firebase.storage.TaskEvent.STATE_CHANGED,
             (snapshot) => {
-                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                 var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 console.log('Upload is ' + progress + '% done');
                 switch (snapshot.state) {
-                    case Firebase.storage.TaskState.PAUSED: // or 'paused'
+                    case Firebase.storage.TaskState.PAUSED:
                         console.log('Upload is paused');
                         break;
-                    case Firebase.storage.TaskState.RUNNING: // or 'running'
+                    case Firebase.storage.TaskState.RUNNING:
                         console.log('Upload is running');
                         break;
                 }
             },
             (error) => {
-                // A full list of error codes is available at
-                // https://firebase.google.com/docs/storage/web/handle-errors
                 switch (error.code) {
                     case 'storage/unauthorized':
-                        // User doesn't have permission to access the object
                         break;
                     case 'storage/canceled':
-                        // User canceled the upload
                         break;
 
-                    // ...
-
                     case 'storage/unknown':
-                        // Unknown error occurred, inspect error.serverResponse
                         break;
                 }
             },
             () => {
-                // Upload completed successfully, now we can get the download URL
                 uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
                     return db.doc(`/users/${userID}`).update({ imageUrl: downloadURL });
                 });
             }
         )
 
-
-
-
     }
 
     function uploadImage() {
-        console.log("hej");
+        history.push("/barber");
     }
 
-    /*     function uploadImage(req, res) {
-            const BusBoy = require('busboy');
-            const path = require('path');
-            const os = require('os');
-            const fs = require('fs');
-    
-            const busboy = new BusBoy({ headers: req.headers });
-    
-            let imageFileName;
-            let imageToBeUploaded = {};
-    
-            busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-    
-                console.log(fieldname);
-                console.log(filename);
-                console.log(mimetype)
-    
-                const imageExtension = filename.split('.')[filename.split('.').length - 1];
-                imageFileName = `${Math.round(Math.random() * 1000000000000).toString()}.${imageExtension}`;
-                const filepath = path.join(os.tmpdir(), imageFileName);
-                imageToBeUploaded = { filepath, mimetype };
-                file.pipe(fs.createWriteStream(filepath));
-            })
-            busboy.on('finish', () => {
-                Firebase.storage().bucket().upload(imageToBeUploaded.filepath, {
-                    resumable: false,
-                    metadata: {
-                        metadata: {
-                            contentType: imageToBeUploaded.mimetype
-                        }
-                    }
-                })
-                    .then(()=> {
-                        const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${process.env.REACT_APP_FIREBASE_STORAGE_BUCKET}/o/${imageFileName}?alt=media`;
-                        return db.doc(`/users/${userID}`).update({ imageUrl });
-                    })
-                    .then(() => {
-                        return res.json({ message: 'Image uploaded successfully'});
-                    })
-                    .catch( err => {
-                        console.log(err);
-                        return res.status(500).json({ error: err.code});
-                    })
-            })
-            busboy.end(req.rawBody);
-    
-        } */
+    function deleteAccount() {
+        Firebase.auth().currentUser.delete();
+        history.push("/barber");
+    }
 
 
     return (
@@ -224,6 +139,8 @@ function UserProfile() {
                         <button type="submit" className="w-full py-3 mt-10 bg-gray-800 rounded-sm font-medium text-white uppercase focus:outline-none hover:bg-gray-700 hover:shadow-none">Uppdatera info</button>
 
                     </form>
+
+                    <button onClick={() => deleteAccount()}>Radera konto</button>
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { db } from '../../FirebaseConfig';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
@@ -9,6 +10,7 @@ function AddService() {
     const [EnteredDescription, setDescription] = useState('');
     const [EnteredPrice, setPrice] = useState('');
     const [EnteredImage, setImage] = useState('');
+    const [Messages, setMessages] = useState([]);
 
     const token = localStorage.getItem('token');
     const history = useHistory();
@@ -62,6 +64,41 @@ function AddService() {
                 console.log(error);
             })
     }
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+
+            try {
+                const response = await db.collection("message").get().then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        // doc.data() is never undefined for query doc snapshots
+                        let data = { title: 'No messages found' };
+
+                        data = doc.data()
+
+                        setMessages(data);
+                        console.log(data)
+
+                    });
+                    console.log(Messages);
+
+                });
+
+                console.log('response', response);
+
+
+            } catch (err) {
+                console.error(err);
+            }
+
+        };
+
+        fetchData();
+
+    }, []);
+
+
     return (
         <div className="flex items-center min-h-screen bg-gray-50 dark:bg-gray-900">
             <div className="container mx-auto">
