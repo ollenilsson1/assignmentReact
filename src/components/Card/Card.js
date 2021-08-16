@@ -1,24 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from "axios";
 import Modal from "react-modal";
 import { useHistory } from 'react-router';
 
+import { db } from '../../FirebaseConfig';
+import { AuthContext } from "../../Auth";
+
+import dotenv from 'dotenv';
+dotenv.config();
+
 function Card({ productid, title, price, desc, img }) {
 
+
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [EnteredName, setName] = useState('');
+ /*  const [EnteredName, setName] = useState('');
   const [EnteredEmail, setEmail] = useState('');
-  const [EnteredMobileNumber, setMobileNumber] = useState('');
+  const [EnteredMobileNumber, setMobileNumber] = useState(''); */
   const [EnteredDateTime, setDateTime] = useState('');
   const [EnteredMessage, setMessage] = useState('');
 
   const history = useHistory();
 
-  const userid = localStorage.getItem('userid');
   const token = localStorage.getItem('token');
   const role = localStorage.getItem('role');
 
+  const { currentUser } = useContext(AuthContext);
+
+  let userid = null;
+    
+    if ( currentUser  !== null) {
+        userid = currentUser.uid;
+    }
+
   let isAdmin = false;
+
 
 
   if (role === 'admin') {
@@ -46,7 +61,7 @@ function Card({ productid, title, price, desc, img }) {
     setIsOpen(false)
   }
 
-  function nameChangeHandler(event) {
+ /*  function nameChangeHandler(event) {
     setName(event.target.value);
   };
 
@@ -56,7 +71,7 @@ function Card({ productid, title, price, desc, img }) {
 
   function mobileNumberChangeHandler(event) {
     setMobileNumber(event.target.value);
-  };
+  }; */
 
   function dateTimeChangeHandler(event) {
     setDateTime(event.target.value);
@@ -66,7 +81,7 @@ function Card({ productid, title, price, desc, img }) {
     setMessage(event.target.value);
   };
 
-  function submitHandler(event) {
+ /*  function submitHandler(event) {
     event.preventDefault();
 
     axios.post('https://boiling-dusk-80419.herokuapp.com/bookings', {
@@ -94,7 +109,28 @@ function Card({ productid, title, price, desc, img }) {
         console.log('Error message: ', error);
         history.push("/login");
       })
+  } */
+
+  function submitHandler(event) {
+    event.preventDefault();
+
+    db.collection("booking").add({
+      productID: productid,
+      userid: userid,
+      title: title,
+      description: desc,
+      price: price,
+      timeToAppointment: new Date(EnteredDateTime),
+      message: EnteredMessage,
+    }).then((docRef) =>{
+      console.log("Document written with ID: ", docRef.id);
+      console.log("Document written with ID: ", docRef);
+    }).catch((error) => {
+      console.log("Errror:", error);
+    })
+
   }
+
 
 
   /* för admin update product */
@@ -168,6 +204,8 @@ function Card({ productid, title, price, desc, img }) {
       })
   }
 
+  
+
   /* delete request */
   async function deleteProduct(id) {
     const response = await axios.delete(`https://boiling-dusk-80419.herokuapp.com/products/${id}`,
@@ -180,6 +218,8 @@ function Card({ productid, title, price, desc, img }) {
       window.location.reload();
     }
   }
+
+  
 
 
   return (
@@ -205,7 +245,7 @@ function Card({ productid, title, price, desc, img }) {
               </div>
               <div className="m-7">
                 <form id="form" onSubmit={submitHandler}>
-                  <div className="mb-6">
+                  {/* <div className="mb-6">
                     <label htmlFor="name" className="block mb-2 text-sm text-gray-600 dark:text-gray-400">För och efternamn</label>
                     <input type="text" name="name" id="name" value={EnteredName} onChange={nameChangeHandler} placeholder="För och efternamn.." required className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
                   </div>
@@ -217,7 +257,7 @@ function Card({ productid, title, price, desc, img }) {
 
                     <label htmlFor="phone" className="text-sm text-gray-600 dark:text-gray-400">Telefonnummer</label>
                     <input type="text" name="phone" id="phone" value={EnteredMobileNumber} onChange={mobileNumberChangeHandler} placeholder="079 331 48 77" required className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
-                  </div>
+                  </div> */}
                   <div className="mb-6">
 
                     <label htmlFor="date" className="text-sm text-gray-600 dark:text-gray-400">Datum</label>

@@ -42,7 +42,7 @@ function Login() {
                 localStorage.setItem('token', res.data.jwt);
                 localStorage.setItem('userid', res.data.user.id);
                 localStorage.setItem('role', res.data.user.role.type);
-                history.push("/barber");
+                history.push("/addservice");
                 window.location.reload();
             })
             .catch(error => {

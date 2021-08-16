@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { db } from '../../FirebaseConfig';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
@@ -9,6 +10,7 @@ function AddService() {
     const [EnteredDescription, setDescription] = useState('');
     const [EnteredPrice, setPrice] = useState('');
     const [EnteredImage, setImage] = useState('');
+    const [Messages, setMessages] = useState([]);
 
     const token = localStorage.getItem('token');
     const history = useHistory();
@@ -62,12 +64,68 @@ function AddService() {
                 console.log(error);
             })
     }
+
+    /*     useEffect(() => {
+    
+            const fetchData = async () => {
+    
+                try {
+                    const response = await db.collection("message").get().then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            // doc.data() is never undefined for query doc snapshots
+                            let data = { title: 'No messages found' };
+    
+                            data = doc.data()
+    
+                            setMessages(data);
+                            console.log(data)
+    
+                        });
+                        console.log(Messages);
+    
+                    });
+    
+                    console.log('response', response);
+    
+    
+                } catch (err) {
+                    console.error(err);
+                }
+    
+            };
+    
+            fetchData();
+    
+        }, []); */
+
+    useEffect(() => {
+        const getMessages = [];
+        const subscriber = db
+            .collection("message")
+            .onSnapshot((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    getMessages.push({
+                        ...doc.data(), //spread operator
+                        key: doc.id, // `id` given to us by Firebase
+                    });
+                });
+                setMessages(getMessages);
+            });
+
+        // return cleanup function
+        return () => subscriber();
+    }, []); // empty dependencies array => useEffect only called once
+
+    console.log(Messages);
+
+
     return (
         <div className="flex items-center min-h-screen bg-gray-50 dark:bg-gray-900">
             <div className="container mx-auto">
                 <div className="max-w-md mx-auto my-10 bg-white p-5 rounded-md shadow-sm">
                     <div className="text-center">
-                        <h1 className="my-3 text-3xl font-semibold text-gray-700 dark:text-gray-200">Lägg till en ny tjänst!</h1>
+                        <h1 className="my-3 text-3xl font-semibold text-gray-700 dark:text-gray-200">Admin sida</h1>
+                        <h2>Lägg till nya produkter</h2>
                     </div>
                     <div className="m-7">
                         <form id="form" onSubmit={submitHandler}>
@@ -94,6 +152,14 @@ function AddService() {
                                 <button type="submit" className="w-full px-3 py-4 text-white bg-indigo-500 rounded-md focus:bg-indigo-600 focus:outline-none">Ladda upp!</button>
                             </div>
                         </form>
+                    </div>
+                    <div className="container">
+                        <h1>Meddelanden:</h1>
+                        {Messages.length > 0 ? (
+                            Messages.map((message) => <div key={message.key}><p>Namn: {message.name}</p><p>Email: {message.email}</p><p>Telefonnummer: {message.phone}</p><p>Meddelande: {message.message}</p></div>)
+                        ) : (
+                            <h1>Inga meddelanden :(</h1>
+                        )}
                     </div>
                 </div>
             </div>
