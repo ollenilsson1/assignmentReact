@@ -65,38 +65,58 @@ function AddService() {
             })
     }
 
-    useEffect(() => {
-
-        const fetchData = async () => {
-
-            try {
-                const response = await db.collection("message").get().then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        // doc.data() is never undefined for query doc snapshots
-                        let data = { title: 'No messages found' };
-
-                        data = doc.data()
-
-                        setMessages(data);
-                        console.log(data)
-
+    /*     useEffect(() => {
+    
+            const fetchData = async () => {
+    
+                try {
+                    const response = await db.collection("message").get().then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            // doc.data() is never undefined for query doc snapshots
+                            let data = { title: 'No messages found' };
+    
+                            data = doc.data()
+    
+                            setMessages(data);
+                            console.log(data)
+    
+                        });
+                        console.log(Messages);
+    
                     });
-                    console.log(Messages);
+    
+                    console.log('response', response);
+    
+    
+                } catch (err) {
+                    console.error(err);
+                }
+    
+            };
+    
+            fetchData();
+    
+        }, []); */
 
+    useEffect(() => {
+        const getMessages = [];
+        const subscriber = db
+            .collection("message")
+            .onSnapshot((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    getMessages.push({
+                        ...doc.data(), //spread operator
+                        key: doc.id, // `id` given to us by Firebase
+                    });
                 });
+                setMessages(getMessages);
+            });
 
-                console.log('response', response);
+        // return cleanup function
+        return () => subscriber();
+    }, []); // empty dependencies array => useEffect only called once
 
-
-            } catch (err) {
-                console.error(err);
-            }
-
-        };
-
-        fetchData();
-
-    }, []);
+    console.log(Messages);
 
 
     return (
@@ -132,6 +152,14 @@ function AddService() {
                                 <button type="submit" className="w-full px-3 py-4 text-white bg-indigo-500 rounded-md focus:bg-indigo-600 focus:outline-none">Ladda upp!</button>
                             </div>
                         </form>
+                    </div>
+                    <div className="container">
+                        <h1>Meddelanden:</h1>
+                        {Messages.length > 0 ? (
+                            Messages.map((message) => <div key={message.key}><p>Namn: {message.name}</p><p>Email: {message.email}</p><p>Telefonnummer: {message.phone}</p><p>Meddelande: {message.message}</p></div>)
+                        ) : (
+                            <h1>Inga meddelanden :(</h1>
+                        )}
                     </div>
                 </div>
             </div>
