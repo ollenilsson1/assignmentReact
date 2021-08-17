@@ -65,39 +65,6 @@ function AddService() {
             })
     }
 
-    /*     useEffect(() => {
-    
-            const fetchData = async () => {
-    
-                try {
-                    const response = await db.collection("message").get().then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                            // doc.data() is never undefined for query doc snapshots
-                            let data = { title: 'No messages found' };
-    
-                            data = doc.data()
-    
-                            setMessages(data);
-                            console.log(data)
-    
-                        });
-                        console.log(Messages);
-    
-                    });
-    
-                    console.log('response', response);
-    
-    
-                } catch (err) {
-                    console.error(err);
-                }
-    
-            };
-    
-            fetchData();
-    
-        }, []); */
-
     useEffect(() => {
         const getMessages = [];
         const subscriber = db
