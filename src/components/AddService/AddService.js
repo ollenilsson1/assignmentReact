@@ -83,7 +83,10 @@ function AddService() {
         return () => subscriber();
     }, []); // empty dependencies array => useEffect only called once
 
-    console.log(Messages);
+    function deleteMessage(key){
+        db.collection("message").doc(key).delete()
+
+    }
 
 
     return (
@@ -123,7 +126,7 @@ function AddService() {
                     <div className="container">
                         <h1>Meddelanden:</h1>
                         {Messages.length > 0 ? (
-                            Messages.map((message) => <div key={message.key}><p>Namn: {message.name}</p><p>Email: {message.email}</p><p>Telefonnummer: {message.phone}</p><p>Meddelande: {message.message}</p></div>)
+                            Messages.map((message) => <div key={message.key}><p>Namn: {message.name}</p><p>Email: {message.email}</p><p>Telefonnummer: {message.phone}</p><p>Meddelande: {message.message}</p><button onClick={() => deleteMessage(message.key)}>Radera meddelande</button></div>)
                         ) : (
                             <h1>Inga meddelanden :(</h1>
                         )}

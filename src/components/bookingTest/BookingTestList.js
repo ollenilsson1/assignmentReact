@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import MyBookings from './Mybookings';
+
 
 import { db } from '../../FirebaseConfig';
 import { AuthContext } from "../../Auth";
-
+import BookingTest from './BookingTest';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
-function BookingList() {
+function BookingTestList() {
 
     const [products, setProducts] = useState([]);
 
@@ -20,7 +20,7 @@ function BookingList() {
         userid = currentUser.uid;
     }
 
-    console.log(userid)
+    console.log(products)
 
     /* get request 
     useEffect(() => {
@@ -48,7 +48,7 @@ function BookingList() {
     useEffect(() => {
         const getProducts = [];
         const subscriber = db
-            .collection("booking")
+            .collection("booking").where("userid", "==", userid)
             .onSnapshot((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     getProducts.push({
@@ -68,7 +68,9 @@ function BookingList() {
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
             {products.map((product) => {
                 return (
-                    <MyBookings key={product.id} bookingid={product.id} img={product.product.img} title={product.product.title} time={product.timeToAppointment} price={product.product.price} />
+                    console.log(product)
+                //    <BookingTest key={product.key} bookingid={product.key} title={product.title} time={product.timeToAppointment} price={product.price} />
+                   
                 )
             }
 
@@ -85,4 +87,4 @@ function BookingList() {
 
 
 
-export default BookingList;
+export default BookingTestList;

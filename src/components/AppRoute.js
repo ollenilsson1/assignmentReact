@@ -18,6 +18,7 @@ import UserProfile from './UserProfile/UserProfile';
 
 import FireLogin from "./Login/FireLogin";
 import FireRegister from "./Register/FireRegister";
+import BookingTestList from './bookingTest/BookingTestList';
 
 
 export default function AppRoute() {
@@ -39,6 +40,7 @@ export default function AppRoute() {
                 <Route path="/addservice" component={AddService} />
                 <Route path="/contact" exact component={Contact} />
                 <Route path="/profile" exact component={UserProfile} /> 
+                <Route path="/book" exact component={BookingTestList} />
                 <Footer/>
             </Router>
         </AuthProvider>
