@@ -119,6 +119,7 @@ function Card({ productid, title, price, desc, img }) {
       userid: userid,
       title: title,
       description: desc,
+      imgUrl: `https://boiling-dusk-80419.herokuapp.com${img.url}`,
       price: price,
       timeToAppointment: new Date(EnteredDateTime),
       message: EnteredMessage,
@@ -231,6 +232,7 @@ function Card({ productid, title, price, desc, img }) {
         <p className="text-center">{desc}</p>
         <p className="text-center">{price}</p>
         <div className="mt-5 text-center">
+          
 
           {/* <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={openModal} >boka</button> */}
           {isAdmin ? <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={() => deleteProduct(productid)}>Radera produkt</button> : <button className="hover:bg-gray-700 rounded-full uppercase py-2 px-4 font-semibold hover:text-white bg-gray-400 text-gray-100" onClick={openModal} >boka</button>}

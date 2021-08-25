@@ -68,8 +68,7 @@ function BookingTestList() {
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
             {products.map((product) => {
                 return (
-                    console.log(product)
-                //    <BookingTest key={product.key} bookingid={product.key} title={product.title} time={product.timeToAppointment} price={product.price} />
+                    <div key={product.key} id={product.key}> <img src={product.imgUrl} alt="barber" className="overflow-hidden"></img> <p>{product.title}</p>  <p>{product.price}</p></div>
                    
                 )
             }
