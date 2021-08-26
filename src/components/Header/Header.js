@@ -32,7 +32,6 @@ function Header() {
                         <ul className="lg:flex items-center justify-between text-base text-white pt-4 lg:pt-0">
                             <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/">Startsida</Link></li>
                             <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/barber">Frisör</Link></li>
-                            <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/book">Book test</Link></li>
                             {/* Behöver rendering för firebase logged in här */}
                             <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/mybookings">Mina bokningar</Link></li>
                             <li><Link className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300" to="/profile">Profil</Link></li>

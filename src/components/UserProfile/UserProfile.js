@@ -101,7 +101,7 @@ function UserProfile() {
 
     }
 
-    function uploadImage() {
+    async function uploadImage() {
         history.push("/barber");
     }
 
