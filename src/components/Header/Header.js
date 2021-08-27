@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
 import firebaseConfig from "../../FirebaseConfig";
+import { AuthContext } from "../../Auth";
 
 const token = localStorage.getItem("token");
 const role = localStorage.getItem("role");
@@ -13,6 +14,14 @@ if (token !== null && token !== "" && role === "admin") {
 }
 
 function Header() {
+  const { currentUser } = useContext(AuthContext);
+  let isLoggedIn = null;
+
+  if (currentUser !== null) {
+    isLoggedIn = true;
+  }
+
+  console.log(isLoggedIn);
   return (
     <>
       <header className="lg:px-16 px-6 bg-gray-700 flex flex-wrap items-center lg:py-0 py-2">
@@ -152,22 +161,44 @@ function Header() {
                 </Link>
               </li>
               {/* Behöver rendering för firebase logged in här */}
-              <li>
+              {isLoggedIn ? (
+                <li>
+                  <Link
+                    className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300"
+                    to="/mybookings"
+                  >
+                    Mina bokningar
+                  </Link>
+                </li>
+              ) : null}
+
+              {isLoggedIn ? (
+                <li>
+                  <Link
+                    className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300"
+                    to="/profile"
+                  >
+                    Profil
+                  </Link>
+                </li>
+              ) : null}
+
+              {/* <li>
                 <Link
                   className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300"
                   to="/mybookings"
                 >
                   Mina bokningar
                 </Link>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <Link
                   className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300"
                   to="/profile"
                 >
                   Profil
                 </Link>
-              </li>
+              </li> */}
               {isAdminLoggedIn ? (
                 <li>
                   <Link
@@ -197,7 +228,19 @@ function Header() {
                   </Link>
                 </li>
               )}
-              <li>
+              {isLoggedIn ? (
+                <button onClick={() => firebaseConfig.auth().signOut()}>
+                Logga ut
+              </button>
+              ) : <li>
+              <Link
+                className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300"
+                to="/login"
+              >
+                Logga in
+              </Link>
+            </li>}
+              {/* <li>
                 <Link
                   className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-blue-300"
                   to="/login"
@@ -207,7 +250,7 @@ function Header() {
               </li>
               <button onClick={() => firebaseConfig.auth().signOut()}>
                 Sign Out
-              </button>
+              </button> */}
             </ul>
           </nav>
         </div>
